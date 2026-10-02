@@ -365,7 +365,7 @@
     a.addEventListener('click', function(){ var el=document.getElementById(map[a.dataset.pick]); if(el) el.checked=true; });
   });
   // form -> Dipity Farms lead (GoHighLevel inbound webhook), with a mailto fallback
-  var LEAD_WEBHOOK = '';
+  var LEAD_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/4dE9gZFFmqEJdekLDm2n/webhook-trigger/4b5657e4-8aef-4e85-b94d-830c879830d7';
   var f = document.getElementById('inquiry'), note = document.getElementById('formnote');
   var btn = f.querySelector('button[type=submit], .btn[type=submit]') || f.querySelector('button');
   var sending = false;
@@ -475,5 +475,5 @@
   new MutationObserver(fit).observe(h, {childList:true, characterData:true, subtree:true});
 })();
 </script>
-<button aria-label="Remove this" class="xbtn" hidden="" title="Remove this" type="button">×</button>
+
 </body></html>
