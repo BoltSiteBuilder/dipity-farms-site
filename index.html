@@ -390,6 +390,7 @@
   });
   // form -> Dipity Farms lead (GoHighLevel inbound webhook), with a mailto fallback
   var LEAD_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/4dE9gZFFmqEJdekLDm2n/webhook-trigger/4b5657e4-8aef-4e85-b94d-830c879830d7';
+  var ALWAYS_EMAIL = true;
   var f = document.getElementById('inquiry'), note = document.getElementById('formnote');
   var btn = f.querySelector('button[type=submit], .btn[type=submit]') || f.querySelector('button');
   var sending = false;
@@ -434,6 +435,16 @@
       return;
     }
     if (LEAD_WEBHOOK.indexOf('http') !== 0){ mailto(d); return; }
+
+    // ALWAYS_EMAIL: until the GoHighLevel workflow is published, the webhook alone doesn't reach Sarrin.
+    // Send to GoHighLevel in the background AND hand the note to the visitor's email app (info@ -> Sarrin's Gmail).
+    // Set to false once the workflow creates the contact and notifies her.
+    if (ALWAYS_EMAIL){
+      try { fetch(LEAD_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d), keepalive: true }).catch(function(){}); } catch (err) {}
+      mailto(d);
+      say('Your email app should open with your note ready to send — just press Send. If it doesn\u2019t open, write to info@dipityfarms.com or call (704) 249-7979.');
+      return;
+    }
 
     sending = true;
     var label = btn ? btn.textContent : '';
